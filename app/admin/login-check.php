@@ -9,20 +9,43 @@ $out_stauts = 'warning';
 $message = 'Something Wrong! Please Try Again';
 $loginvalid = 0;
 if (!empty($loginemail) && !empty($loginpassword)) {
-    $query = "SELECT * FROM siteadmin WHERE admin_email= '$loginemail' AND admin_password='$loginpassword' AND admin_status='ACTIVE'";
-    $result = mysqli_query($conn, $query)or die(mysqli_error());
-    $num_row = mysqli_num_rows($result);
-    if ($num_row > 0) {
-        $row = mysqli_fetch_assoc($result);
-        $_SESSION['adminemail'] = $row['admin_email'];
-        $_SESSION['started'] = time();
-        $out_stauts = 'success';
-        $message = 'You are Welcome in Admin Panel';
-        $loginvalid = 1;
-    } else {
-        $out_stauts = 'warning';
-        $message = 'Username and Password Incorrect';
-        $loginvalid = 0;
+    $stmt = $conn->prepare("SELECT * FROM siteadmin WHERE admin_email = ? AND admin_status = 'ACTIVE' LIMIT 1");
+    if ($stmt) {
+        $stmt->bind_param("s", $loginemail);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($row = $result->fetch_assoc()) {
+            // Verify password (plain text legacy match or modern password_hash)
+            if ($row['admin_password'] === $loginpassword || password_verify($loginpassword, $row['admin_password'])) {
+                session_regenerate_id(true);
+                $_SESSION['adminemail'] = $row['admin_email'];
+                $_SESSION['admin_name'] = $row['admin_name'];
+                $_SESSION['admin_id']   = $row['admin_id'];
+                $_SESSION['admin_role'] = !empty($row['admin_role']) ? $row['admin_role'] : 'SUPER_ADMIN';
+                $_SESSION['started']    = time();
+
+                // Update logintime
+                $update_login = $conn->prepare("UPDATE siteadmin SET logintime = CURRENT_TIMESTAMP WHERE admin_id = ?");
+                if ($update_login) {
+                    $update_login->bind_param("i", $row['admin_id']);
+                    $update_login->execute();
+                    $update_login->close();
+                }
+
+                $out_stauts = 'success';
+                $message = 'You are Welcome in Admin Panel';
+                $loginvalid = 1;
+            } else {
+                $out_stauts = 'warning';
+                $message = 'Username and Password Incorrect';
+                $loginvalid = 0;
+            }
+        } else {
+            $out_stauts = 'warning';
+            $message = 'Username and Password Incorrect';
+            $loginvalid = 0;
+        }
+        $stmt->close();
     }
 }
 $response[] = array('status' => $out_stauts, 'msg' => $message, 'login' => $loginvalid);

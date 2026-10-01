@@ -8,24 +8,14 @@
     $vacancy_row = getData($vacancy_sql);
     ?>
     <?php include 'header.php'; ?>
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-    />
-
-    <!-- Font Awesome for icons -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
     <style>
       :root {
         --primary-color: #006eae;
         --secondary-color: #007cc4;
         --accent-color: #00a859;
         --light-bg: #f8f9fa;
-        --border-color: #e0e0e0;
-        --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        --border-color: #e2e8f0;
+        --card-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
       }
 
       body {
@@ -54,180 +44,399 @@
           var(--secondary-color) 100%
         );
         color: white;
-        padding: 25px 30px;
-        border-bottom: 5px solid var(--accent-color);
+        padding: 24px 30px;
+        border-bottom: 4px solid var(--accent-color);
       }
 
       .banking-header h1 {
-        font-size: 32px;
-        font-weight: 600;
-        margin: 0 0 5px 0;
+        font-size: 28px;
+        font-weight: 700;
+        margin: 0 0 6px 0;
+        color: #ffffff;
       }
 
       .banking-header .subtitle {
-        font-size: 16px;
-        opacity: 0.9;
+        font-size: 15px;
+        opacity: 0.95;
         margin-bottom: 0;
+        color: #e0f2fe;
       }
 
       .tab-content-banking {
         max-width: 1200px;
-        padding: 30px;
+        padding: 30px 20px;
         margin: 0 auto;
       }
 
       .section-title {
         color: var(--primary-color);
         font-size: 24px;
-        font-weight: 600;
+        font-weight: 700;
         margin-top: 0;
-        margin-bottom: 25px;
+        margin-bottom: 20px;
         padding-bottom: 12px;
-        border-bottom: 2px solid #f0f0f0;
+        border-bottom: 2px solid #e2e8f0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 10px;
       }
 
+      /* Search / Filter Bar */
+      .disclosure-search-wrap {
+        position: relative;
+        margin-bottom: 24px;
+      }
+
+      .disclosure-search-box {
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+
+      .disclosure-search-box i.search-icon {
+        position: absolute;
+        left: 18px;
+        color: #94a3b8;
+        font-size: 16px;
+        pointer-events: none;
+      }
+
+      .disclosure-search-input {
+        width: 100%;
+        height: 50px;
+        padding: 10px 48px 10px 48px;
+        border-radius: 50px;
+        border: 2px solid #e2e8f0;
+        background: #ffffff;
+        font-size: 15px;
+        color: #1e293b;
+        transition: all 0.25s ease;
+        outline: none;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      }
+
+      .disclosure-search-input:focus {
+        border-color: #0284c7;
+        box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.12);
+      }
+
+      .clear-search-btn {
+        position: absolute;
+        right: 16px;
+        background: #e2e8f0;
+        border: none;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        color: #64748b;
+        font-size: 16px;
+        line-height: 1;
+        cursor: pointer;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+      }
+
+      .clear-search-btn:hover {
+        background: #cbd5e1;
+        color: #0f172a;
+      }
+
+      .search-counter-badge {
+        font-size: 13px;
+        color: #64748b;
+        margin-top: 8px;
+        padding-left: 16px;
+        font-weight: 500;
+      }
+
+      /* Financial Card Accordions */
       .financial-card {
-        background: white;
-        border-radius: 8px;
+        background: #ffffff;
+        border-radius: 12px;
         border: 1px solid var(--border-color);
         overflow: hidden;
-        transition: transform 0.3s, box-shadow 0.3s;
-        margin-bottom: 15px;
+        transition: box-shadow 0.25s ease, border-color 0.25s ease;
+        margin-bottom: 16px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
       }
 
       .financial-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        border-color: #cbd5e1;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
       }
 
       .card-header-banking {
-        background-color: #f8fafd;
-        padding: 18px 25px;
-        border-bottom: 1px solid var(--border-color);
+        background-color: #ffffff;
+        padding: 16px 22px;
+        border-bottom: 1px solid transparent;
         cursor: pointer;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        text-decoration: none !important; /* Extra safety */
+        transition: background-color 0.2s ease, border-color 0.2s ease;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
       }
-      
-      .card-header-banking:hover, .card-header-banking:focus {
-          text-decoration: none !important;
-          background-color: #f0f4f8;
+
+      .card-header-banking:hover,
+      .card-header-banking:focus {
+        background-color: #f8fafc;
       }
 
       .card-header-banking h4 {
         margin: 0;
-        font-size: 18px;
-        font-weight: 600;
-        color: #333;
+        font-size: 17px;
+        font-weight: 700;
+        color: #1e293b;
         display: flex;
         align-items: center;
+        gap: 12px;
+        flex: 1;
+      }
+
+      .card-header-banking h4 i {
+        font-size: 18px;
+        flex-shrink: 0;
+      }
+
+      .header-right-meta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+      }
+
+      .doc-count-pill {
+        display: inline-block;
+        font-size: 11.5px;
+        font-weight: 600;
+        background: #f1f5f9;
+        color: #475569;
+        padding: 3px 10px;
+        border-radius: 50px;
+        border: 1px solid #e2e8f0;
       }
 
       .toggle-icon {
-        font-size: 20px;
-        font-weight: 300;
-        color: #666;
-        transition: transform 0.3s;
-        margin-left: 10px;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #f1f5f9;
+        color: #0284c7;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+        flex-shrink: 0;
+      }
+
+      .card-header-banking:hover .toggle-icon {
+        background: #e0f2fe;
+        color: #0284c7;
+      }
+
+      .card-header-banking[aria-expanded="true"] {
+        border-bottom-color: #f1f5f9;
+        background-color: #f8fafc;
       }
 
       .card-header-banking[aria-expanded="true"] .toggle-icon {
-        transform: rotate(45deg);
-        color: var(--accent-color);
+        transform: rotate(180deg);
+        background: #0284c7;
+        color: #ffffff;
+        box-shadow: 0 2px 8px rgba(2, 132, 199, 0.25);
       }
 
-      .card-body-banking {
-        padding: 25px;
+      /* Silky Smooth Collapsible Panel via CSS Grid */
+      .financial-collapse {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, visibility 0.35s;
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .financial-collapse.is-open {
+        grid-template-rows: 1fr;
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .financial-collapse > .card-body-banking {
+        overflow: hidden;
+        min-height: 0;
+        padding: 0 20px;
+        transition: padding 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        background: #fafbfe;
+      }
+
+      .financial-collapse.is-open > .card-body-banking {
+        padding: 16px 20px;
       }
 
       .report-list-container {
-        max-height: 400px;
+        max-height: 420px;
         overflow-y: auto;
-        border: 1px solid #eee;
-        border-radius: 6px;
+        padding: 4px;
+        -webkit-overflow-scrolling: touch;
       }
 
+      /* Report Item Touch Target */
       .report-item {
-        padding: 15px 20px;
-        border-bottom: 1px solid #f0f0f0;
+        padding: 14px 18px;
+        background: #ffffff;
+        border: 1px solid #eef2f6;
+        border-radius: 10px;
+        margin-bottom: 10px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        transition: background-color 0.2s;
-        gap: 15px;
-      }
-
-      .report-item:hover {
-        background-color: #f9fbfe;
+        gap: 14px;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
       }
 
       .report-item:last-child {
-        border-bottom: none;
+        margin-bottom: 0;
       }
 
-      /* Responsive Text Handling */
+      .report-item:hover,
+      .report-item:active {
+        background-color: #f0f7ff;
+        border-color: #bae6fd;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(2, 132, 199, 0.08);
+      }
+
       .report-title {
-        font-weight: 500;
-        color: #333;
-        flex: 1;
+        font-weight: 600;
+        color: #1e293b;
+        font-size: 14.5px;
+        line-height: 1.4;
         word-break: break-word;
-        padding-right: 10px;
+        flex: 1;
+      }
+
+      .report-item:hover .report-title {
+        color: #0284c7;
+      }
+
+      /* PDF Action Button on Right */
+      .report-item a {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #fee2e2;
+        color: #dc2626 !important;
+        border: 1px solid #fca5a5;
+        padding: 8px 15px;
+        border-radius: 50px;
+        font-size: 13px;
+        font-weight: 700;
+        white-space: nowrap;
+        flex-shrink: 0;
+        transition: all 0.2s ease;
+        text-decoration: none !important;
+      }
+
+      .report-item:hover a,
+      .report-item a:hover {
+        background: #dc2626;
+        color: #ffffff !important;
+        border-color: #dc2626;
+        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
       }
 
       .pdf-icon {
-        color: #e74c3c;
-        font-size: 20px;
-        flex-shrink: 0;
+        color: inherit !important;
+        font-size: 15px;
       }
 
       .footer-info {
         background-color: #f8fafd;
         padding: 20px;
-        border-radius: 6px;
+        border-radius: 8px;
         margin-top: 30px;
         font-size: 14px;
         color: #555;
         border-left: 4px solid var(--accent-color);
       }
 
-      /* RESPONSIVE MEDIA QUERIES */
+      /* RESPONSIVE MEDIA QUERIES FOR MOBILE */
       @media (max-width: 768px) {
+        .breadcumb-area {
+            min-height: auto !important;
+            height: auto !important;
+            padding: 30px 15px !important;
+        }
+
         .banking-header {
-          padding: 20px 15px;
+            padding: 18px 16px;
         }
 
         .banking-header h1 {
-          font-size: 24px;
+            font-size: 22px;
         }
         
         .banking-header .subtitle {
-          font-size: 14px;
+            font-size: 13.5px;
         }
 
         .tab-content-banking {
-          padding: 15px;
+            padding: 16px 12px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+
+        .disclosure-search-input {
+            height: 46px;
+            font-size: 14px;
         }
         
         .card-header-banking {
-            padding: 15px;
+            padding: 14px 16px;
         }
         
         .card-header-banking h4 {
-            font-size: 16px;
+            font-size: 15px;
+            gap: 8px;
+        }
+
+        .doc-count-pill {
+            display: none;
         }
         
         .card-body-banking {
-            padding: 15px;
+            padding: 12px 10px;
+        }
+
+        /* Eliminate mobile scroll-trap so whole page scrolls naturally */
+        .report-list-container {
+            max-height: none !important;
+            overflow-y: visible !important;
         }
         
         .report-item {
-            padding: 12px 15px;
+            padding: 12px 14px;
+            gap: 10px;
         }
-        
-        .breadcumb-area {
-            padding: 30px 0;
+
+        .report-title {
+            font-size: 13.5px;
+        }
+
+        .report-item a {
+            padding: 6px 12px;
+            font-size: 12px;
         }
       }
     </style>
@@ -243,14 +452,6 @@
                         <ul>
                             <li><a href="/">Home</a></li>
                             <li> Financial Performance & Annual Report</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="britcam-shape">
-                    <div class="breadcumb-content upp">
-                        <ul>
-                            <li><a href="/">Investor Corner</a></li>
-                            <li>Financial Performance & Annual Report</li>
                         </ul>
                     </div>
                 </div>
@@ -270,17 +471,29 @@
       <!-- Tab Content -->
       <div class="tab-content tab-content-banking">
         <!-- Disclosure Main Tab -->
-        <div role="tabpanel" class="tab-pane fade in active" id="disclosure-main">
-          <h2 class="section-title">Financial Performance & Annual Report</h2>
+        <div role="tabpanel" class="tab-pane active" id="disclosure-main">
+          <h2 class="section-title">
+            <span>Financial Performance & Annual Report</span>
+          </h2>
+
+          <!-- Instant Search & Filter Bar -->
+          <div class="disclosure-search-wrap">
+            <div class="disclosure-search-box">
+              <i class="fa fa-search search-icon"></i>
+              <input type="text" id="disclosureSearch" class="disclosure-search-input" placeholder="Search reports by year or keyword (e.g. 2025, Annual Report, Financials)..." autocomplete="off">
+              <button type="button" id="clearSearchBtn" class="clear-search-btn" title="Clear search">&times;</button>
+            </div>
+            <div id="searchCounterBadge" class="search-counter-badge" style="display: none;"></div>
+          </div>
 
           <!-- 1. Annual Return -->
           <div class="financial-card">
             <div
               class="card-header-banking"
-              data-toggle="collapse"
-              href="#annualReturn"
+              data-target="#annualReturn"
               aria-expanded="true"
-              aria-controls="annualReturn"
+              role="button"
+              tabindex="0"
             >
               <h4>
                 <i
@@ -289,9 +502,9 @@
                 ></i>
                 Annual Report
               </h4>
-              <span class="toggle-icon">+</span>
+              <span class="toggle-icon"><i class="fa fa-chevron-down"></i></span>
             </div>
-            <div id="annualReturn" class="collapse in">
+            <div id="annualReturn" class="financial-collapse is-open">
               <div class="card-body-banking">
                 <!-- Report List -->
                 <div class="report-list-container">
@@ -322,7 +535,7 @@
                   </div>
                   <div class="report-item">
                     <span class="report-title">Annual_Report_2025-26</span>
-                    <a href="upload/fpar/annual_report/annual_report_2025-26.pdf" target="_blank">
+                    <a href="upload/fpar/annual_report/Annual Report_2025-26.pdf" target="_blank">
                       <i class="fa fa-file-pdf-o pdf-icon"></i>
                     </a>
                   </div>
@@ -336,10 +549,10 @@
           <div class="financial-card">
             <div
               class="card-header-banking"
-              data-toggle="collapse"
-              href="#corporateGovernance"
+              data-target="#corporateGovernance"
               aria-expanded="false"
-              aria-controls="corporateGovernance"
+              role="button"
+              tabindex="0"
             >
               <h4>
                 <i
@@ -348,9 +561,9 @@
                 ></i>
                 Board Meeting Intimation
               </h4>
-              <span class="toggle-icon">+</span>
+              <span class="toggle-icon"><i class="fa fa-chevron-down"></i></span>
             </div>
-            <div id="corporateGovernance" class="collapse">
+            <div id="corporateGovernance" class="financial-collapse">
               <div class="card-body-banking">
                 <!-- Report List -->
                 <div class="report-list-container">
@@ -382,10 +595,10 @@
           <div class="financial-card">
             <div
               class="card-header-banking"
-              data-toggle="collapse"
-              href="#creditRating"
+              data-target="#creditRating"
               aria-expanded="false"
-              aria-controls="creditRating"
+              role="button"
+              tabindex="0"
             >
               <h4>
                 <i
@@ -394,9 +607,9 @@
                 ></i>
                 Financial Results
               </h4>
-              <span class="toggle-icon">+</span>
+              <span class="toggle-icon"><i class="fa fa-chevron-down"></i></span>
             </div>
-            <div id="creditRating" class="collapse">
+            <div id="creditRating" class="financial-collapse">
               <div class="card-body-banking">
                 <!-- Report List -->
                 <div class="report-list-container">
@@ -445,16 +658,147 @@
       </div>
     </div>
 
-    <!-- jQuery and Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
+    <!-- Interactive Scripts for Mobile Accordion, Row Clicks & Live Search -->
     <script>
-      $(document).ready(function () {
-        // Remove the filter button animation code since filters are removed
+      document.addEventListener("DOMContentLoaded", function () {
+        var cardHeaders = document.querySelectorAll(".card-header-banking");
+        var reportItems = document.querySelectorAll(".report-item");
+        var searchInput = document.getElementById("disclosureSearch");
+        var clearBtn = document.getElementById("clearSearchBtn");
+        var counterBadge = document.getElementById("searchCounterBadge");
+
+        // 1. Calculate & append document counts to each card header
+        document.querySelectorAll(".financial-card").forEach(function (card) {
+          var items = card.querySelectorAll(".report-item");
+          var header = card.querySelector(".card-header-banking");
+          if (header && items.length > 0) {
+            var metaWrap = document.createElement("div");
+            metaWrap.className = "header-right-meta";
+
+            var countPill = document.createElement("span");
+            countPill.className = "doc-count-pill";
+            countPill.textContent = items.length + (items.length === 1 ? " Document" : " Documents");
+
+            var toggleIcon = header.querySelector(".toggle-icon");
+            if (toggleIcon) {
+              header.insertBefore(metaWrap, toggleIcon);
+              metaWrap.appendChild(countPill);
+              metaWrap.appendChild(toggleIcon);
+            }
+          }
+        });
+
+        // 2. Silky Smooth Accordion Toggle Logic
+        function toggleSection(header, forceOpen) {
+          var targetSelector = header.getAttribute("data-target") || header.getAttribute("href");
+          if (!targetSelector) return;
+          var targetBody = document.querySelector(targetSelector);
+          if (!targetBody) return;
+
+          var isCurrentlyOpen = header.getAttribute("aria-expanded") === "true";
+          var willOpen = (forceOpen !== undefined) ? forceOpen : !isCurrentlyOpen;
+
+          if (willOpen) {
+            header.setAttribute("aria-expanded", "true");
+            targetBody.classList.add("is-open");
+          } else {
+            header.setAttribute("aria-expanded", "false");
+            targetBody.classList.remove("is-open");
+          }
+        }
+
+        cardHeaders.forEach(function (header) {
+          header.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleSection(header);
+          });
+
+          header.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              toggleSection(header);
+            }
+          });
+        });
+
+        // 3. Make whole row touch-friendly / clickable on mobile
+        reportItems.forEach(function (item) {
+          var link = item.querySelector("a");
+          if (link) {
+            item.addEventListener("click", function (e) {
+              if (e.target.closest("a")) return;
+              link.click();
+            });
+          }
+        });
+
+        // 4. Live Search & Filtering
+        if (searchInput) {
+          searchInput.addEventListener("input", function () {
+            var query = this.value.trim().toLowerCase();
+
+            if (clearBtn) {
+              clearBtn.style.display = query.length > 0 ? "flex" : "none";
+            }
+
+            var totalMatched = 0;
+            var cardsMatched = 0;
+
+            document.querySelectorAll(".financial-card").forEach(function (card) {
+              var items = card.querySelectorAll(".report-item");
+              var cardMatches = 0;
+              var header = card.querySelector(".card-header-banking");
+
+              items.forEach(function (item) {
+                var titleText = item.querySelector(".report-title") ? item.querySelector(".report-title").textContent.toLowerCase() : "";
+                if (query === "" || titleText.indexOf(query) !== -1) {
+                  item.style.display = "";
+                  cardMatches++;
+                  totalMatched++;
+                } else {
+                  item.style.display = "none";
+                }
+              });
+
+              if (query === "") {
+                card.style.display = "";
+                var isFirst = (card === document.querySelector(".financial-card"));
+                if (header) toggleSection(header, isFirst);
+              } else {
+                if (cardMatches > 0) {
+                  card.style.display = "";
+                  cardsMatched++;
+                  if (header) toggleSection(header, true);
+                } else {
+                  card.style.display = "none";
+                  if (header) toggleSection(header, false);
+                }
+              }
+            });
+
+            if (counterBadge) {
+              if (query.length > 0) {
+                counterBadge.style.display = "block";
+                counterBadge.textContent = "Found " + totalMatched + (totalMatched === 1 ? " document" : " documents") + " in " + cardsMatched + (cardsMatched === 1 ? " category" : " categories");
+              } else {
+                counterBadge.style.display = "none";
+              }
+            }
+          });
+        }
+
+        if (clearBtn) {
+          clearBtn.addEventListener("click", function () {
+            if (searchInput) {
+              searchInput.value = "";
+              searchInput.dispatchEvent(new Event("input"));
+              searchInput.focus();
+            }
+          });
+        }
       });
     </script>
-    <!--==================================================-->
     
     <!--------------------------------------------------->
     <?php include 'footer.php'; ?>

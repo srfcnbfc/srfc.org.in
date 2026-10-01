@@ -1,5 +1,6 @@
 # Uploads
 /upload/
+!/upload/tds/.htaccess
 /uploads/
 
 # Environment & sensitive configuration files

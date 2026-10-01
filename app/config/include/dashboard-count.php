@@ -67,4 +67,10 @@ function tractor_loan_count() {
     $countData = mysqli_fetch_assoc($sumquery);
     return array('total' => $countData['tractor_loanCount']);
 }
+function tds_form_count() {
+    $query = "SELECT COUNT(id) as 'tdsCount' from tds_declaration_121";
+    $sumquery = mysqli_query($GLOBALS['conn'], $query)or die(mysqli_error($GLOBALS['conn']));
+    $countData = mysqli_fetch_assoc($sumquery);
+    return array('total' => $countData['tdsCount']);
+}
 ?>

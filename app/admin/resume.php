@@ -1,4 +1,7 @@
-<?php include_once 'header.php'; ?>
+<?php 
+include_once 'header.php'; 
+check_page_access(['SUPER_ADMIN', 'HR']);
+?>
 <div class="page-body">
     <div class="container-fluid">
         <div class="page-header">

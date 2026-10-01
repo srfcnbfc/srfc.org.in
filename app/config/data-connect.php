@@ -1,7 +1,7 @@
 <?php
 define('DB_HOST', "localhost");
-define('DB_USER', "u404061508_srfcnew");
-define('DB_PASSWORD', "Srfc@admin123");
+define('DB_USER', "root");
+define('DB_PASSWORD', "");
 define('DB_DATABASE', "u404061508_srfcnew");
 // Create connection
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);

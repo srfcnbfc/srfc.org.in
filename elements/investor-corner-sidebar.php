@@ -10,6 +10,7 @@
             <li><a href="financial_performance_annual_report.php">Annual return</a></li>
             <li><a href="disclosure.php">Disclosure</a></li>
             <li><a href="investorcorner/policy">Policy</a></li>
+            <li><a href="tds-declaration-form-121">TDS Declaration – Form 121</a></li>
         </ul>
     </div>
 </div>

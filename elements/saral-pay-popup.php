@@ -2,6 +2,9 @@
 // Path to your logo (relative to the page that includes this file, i.e. index.php).
 // Change this to your real logo file, e.g. 'assets/images/logo.png'
 $sp_logo = 'upload/saralpay.png';
+
+// YouTube video ID (works for Shorts too). Leave empty ('') to hide the video button.
+$sp_video_id = '6FeH0y952dc';
 ?>
 <!-- ===== Saral Pay announcement popup ===== -->
 <style>
@@ -103,6 +106,34 @@ $sp_logo = 'upload/saralpay.png';
     .sp-later { background: none; border: 0; padding: 8px 4px; font-size: 14px; color: #5a6b7b; cursor: pointer; text-decoration: underline; }
     .sp-foot { margin: 10px 0 0; font-size: 12.5px; color: #7a8a99; }
 
+    .sp-watch {
+        display: inline-flex; align-items: center; gap: 8px; padding: 13px 20px; cursor: pointer;
+        border: 2px solid #006eae; border-radius: 10px; background: #fff; color: #006eae;
+        font-weight: 700; font-size: 15px; transition: background .2s;
+    }
+    .sp-watch:hover { background: #e9f4fb; }
+    .sp-watch i { font-size: 18px; }
+
+    /* ---- Video view (covers the popup) ---- */
+    .sp-modal.sp-vid { height: min(90vh, 740px); }
+    .sp-video {
+        position: absolute; inset: 0; z-index: 4; display: none; flex-direction: column;
+        align-items: center; padding: 14px 16px 16px; background: #071726; color: #fff;
+    }
+    .sp-video.sp-on { display: flex; }
+    .sp-video-bar { width: 100%; display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .sp-back {
+        display: inline-flex; align-items: center; gap: 6px; border: 0; cursor: pointer;
+        padding: 8px 14px; border-radius: 999px; background: rgba(255, 255, 255, .14); color: #fff; font-size: 14px;
+    }
+    .sp-back:hover { background: rgba(255, 255, 255, .24); }
+    .sp-video-title { font-size: 15px; font-weight: 700; }
+    .sp-frame { flex: 1; min-height: 0; width: 100%; display: flex; align-items: center; justify-content: center; }
+    .sp-frame-box { height: 100%; aspect-ratio: 9 / 16; max-width: 100%; border-radius: 12px; overflow: hidden; background: #000; }
+    .sp-frame-box iframe { display: block; width: 100%; height: 100%; border: 0; }
+    .sp-video .sp-pay { margin-top: 12px; padding: 12px 26px; font-size: 15.5px; }
+    .sp-back:focus-visible, .sp-watch:focus-visible { outline: 3px solid #ff8a5c; outline-offset: 2px; }
+
     .sp-close {
         position: absolute; top: 12px; right: 12px; width: 36px; height: 36px;
         border: 0; border-radius: 50%; background: rgba(16, 35, 58, .08);
@@ -133,9 +164,12 @@ $sp_logo = 'upload/saralpay.png';
         .sp-list li span em { display: none; }
         /* button always visible */
         .sp-footer { padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px)); box-shadow: 0 -8px 16px rgba(16, 35, 58, .08); }
-        .sp-actions { flex-direction: column; gap: 4px; align-items: stretch; }
-        .sp-pay { width: 100%; justify-content: center; padding: 14px 20px; }
-        .sp-later { text-align: center; padding: 6px; }
+        .sp-actions { gap: 8px; }
+        .sp-pay { flex: 1 1 100%; justify-content: center; padding: 14px 20px; }
+        .sp-watch { flex: 1; justify-content: center; padding: 10px 12px; font-size: 14px; }
+        .sp-later { flex: 1; text-align: center; padding: 10px 6px; }
+        .sp-modal.sp-vid { height: 94vh; height: 94dvh; }
+        .sp-video .sp-pay { width: 100%; flex: none; }
         .sp-foot { display: none; }
         .sp-close { top: 10px; right: 10px; background: rgba(255, 255, 255, .95); }
     }
@@ -151,6 +185,19 @@ $sp_logo = 'upload/saralpay.png';
 <div class="sp-overlay" id="saralPayPopup" role="dialog" aria-modal="true" aria-labelledby="spTitle">
     <div class="sp-modal">
         <button type="button" class="sp-close" id="spClose" aria-label="Close">&times;</button>
+
+        <?php if (!empty($sp_video_id)) { ?>
+        <div class="sp-video" id="spVideo">
+            <div class="sp-video-bar">
+                <button type="button" class="sp-back" id="spBack"><i class="bi bi-arrow-left"></i> Back</button>
+                <span class="sp-video-title">How Saral Pay works</span>
+            </div>
+            <div class="sp-frame"><div class="sp-frame-box" id="spFrame"></div></div>
+            <a class="sp-pay" href="https://sarthi-customer.srfcnbfc.com" target="_blank" rel="noopener">
+                <i class="bi bi-wallet2"></i> Pay EMI now
+            </a>
+        </div>
+        <?php } ?>
 
         <div class="sp-brand">
             <div class="sp-logo" id="spLogo">
@@ -199,6 +246,11 @@ $sp_logo = 'upload/saralpay.png';
                 <a class="sp-pay" id="spPay" href="https://sarthi-customer.srfcnbfc.com" target="_blank" rel="noopener">
                     <i class="bi bi-wallet2"></i> Pay EMI now
                 </a>
+                <?php if (!empty($sp_video_id)) { ?>
+                <button type="button" class="sp-watch" id="spWatch" data-video="<?= htmlspecialchars($sp_video_id) ?>">
+                    <i class="bi bi-play-circle-fill"></i> Watch demo
+                </button>
+                <?php } ?>
                 <button type="button" class="sp-later" id="spLater">Maybe later</button>
             </div>
             <p class="sp-foot">You will be taken to the Saral Pay customer portal.</p>
@@ -217,6 +269,27 @@ $sp_logo = 'upload/saralpay.png';
     function seen() { try { return sessionStorage.getItem(KEY) === '1'; } catch (e) { return false; } }
     function remember() { try { sessionStorage.setItem(KEY, '1'); } catch (e) {} }
 
+    var vid = document.getElementById('spVideo');
+    var frame = document.getElementById('spFrame');
+    var modal = overlay.querySelector('.sp-modal');
+    var watchBtn = document.getElementById('spWatch');
+
+    function playVideo() {
+        if (!vid) return;
+        frame.innerHTML = '<iframe src="https://www.youtube.com/embed/' + watchBtn.getAttribute('data-video') +
+            '?autoplay=1&rel=0&playsinline=1" title="How Saral Pay works" ' +
+            'allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+        vid.classList.add('sp-on');
+        modal.classList.add('sp-vid');
+        document.getElementById('spBack').focus();
+    }
+    function stopVideo() {
+        if (!vid) return;
+        frame.innerHTML = '';            // removing the iframe stops playback
+        vid.classList.remove('sp-on');
+        modal.classList.remove('sp-vid');
+    }
+
     function open() {
         lastFocus = document.activeElement;
         overlay.classList.add('sp-open');
@@ -224,18 +297,24 @@ $sp_logo = 'upload/saralpay.png';
         document.getElementById('spPay').focus();
     }
     function close() {
+        stopVideo();
         overlay.classList.remove('sp-open');
         document.body.style.overflow = '';
         remember();
         if (lastFocus && lastFocus.focus) lastFocus.focus();
     }
 
+    if (watchBtn) {
+        watchBtn.addEventListener('click', playVideo);
+        document.getElementById('spBack').addEventListener('click', function () { stopVideo(); watchBtn.focus(); });
+    }
     document.getElementById('spClose').addEventListener('click', close);
     document.getElementById('spLater').addEventListener('click', close);
     document.getElementById('spPay').addEventListener('click', remember);
     overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
     document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && overlay.classList.contains('sp-open')) close();
+        if (e.key !== 'Escape' || !overlay.classList.contains('sp-open')) return;
+        if (vid && vid.classList.contains('sp-on')) { stopVideo(); } else { close(); }
     });
 
     // Shows once per browser session. Remove the "if (!seen())" check to show on every visit.

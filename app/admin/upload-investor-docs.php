@@ -1,4 +1,7 @@
-<?php include_once 'header.php'; ?>
+<?php 
+include_once 'header.php'; 
+check_page_access(['SUPER_ADMIN', 'CS']);
+?>
 <?php
 $investor_doc_sql = "SELECT * FROM investor_doc_type ORDER by doc_id ASC ";
 $investor_doc_row = getData($investor_doc_sql);
