@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<url>
+	<loc>https://srfc.org.in/</loc>
+	<lastmod>2023-04-26T08:19:25+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://srfc.org.in/about</loc>
+	<lastmod>2023-04-26T08:19:25+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://srfc.org.in/board-of-director</loc>
+	<lastmod>2023-04-26T08:19:25+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://srfc.org.in/services/two-wheeler-finance</loc>
+	<lastmod>2023-04-26T08:19:25+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>https://srfc.org.in/services/business-loan</loc>
+	<lastmod>2023-04-26T08:19:25+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>https://srfc.org.in/services/personal-loan-government-employee</loc>
+	<lastmod>2023-04-26T08:19:25+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>https://srfc.org.in/services/two-wheeler-re-financeloan</loc>
+	<lastmod>2023-04-26T08:19:25+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>https://srfc.org.in/csr</loc>
+	<lastmod>2023-04-26T08:19:25+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://srfc.org.in/blog</loc>
+	<lastmod>2023-04-26T08:19:25+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://srfc.org.in/career</loc>
+	<lastmod>2023-04-26T08:19:25+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://srfc.org.in/contact</loc>
+	<lastmod>2023-04-26T08:19:25+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://srfc.org.in/privacy-policy</loc>
+	<lastmod>2023-04-26T08:19:25+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://srfc.org.in/blogs/is-it-a-good-idea-to-buy-a-two-wheeler-on-emi</loc>
+	<lastmod>2023-04-26T08:19:30+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+</urlset>

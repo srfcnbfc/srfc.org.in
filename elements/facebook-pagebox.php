@@ -1,0 +1,3 @@
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v16.0&appId=2158093627769583&autoLogAppEvents=1" nonce="NnHxCvGF"></script>
+<div class="fb-page" data-href="https://www.facebook.com/srfcnbfc/" data-tabs="timeline" data-width="" data-height="310" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true"><blockquote cite="https://www.facebook.com/srfcnbfc/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/srfcnbfc/">Shri Ram Finance Corporation Pvt. Ltd.</a></blockquote></div>

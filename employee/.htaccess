@@ -1,0 +1,12 @@
+Options -MultiViews
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php [NC,L]
+
+#RewriteRule ^services/([0-9a-zA-z_-]+) service.php?service=$1 [L] 
+#
+RewriteRule ^blogs/([0-9a-zA-z_-]+) blog-details.php?blog=$1 [L] 
+RewriteRule ^tutorials/([0-9a-zA-z_-]+) tutorial-details.php?category=$1 [L] 
+RewriteRule ^video-play/([0-9a-zA-z_-]+) video-details.php?id=$1 [L] 

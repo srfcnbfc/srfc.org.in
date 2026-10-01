@@ -1,0 +1,8 @@
+Sitemap: https://srfc.org.in/sitemap_index.xml
+User-agent: *
+Disallow: /tel:
+Disallow: /+91
+Disallow: /javascript:
+Disallow: /mailto:
+Disallow: /app
+Disallow: /cdn-cgi/l/email-protection
