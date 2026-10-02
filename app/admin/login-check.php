@@ -48,6 +48,7 @@ if (!empty($loginemail) && !empty($loginpassword)) {
         $stmt->close();
     }
 }
-$response[] = array('status' => $out_stauts, 'msg' => $message, 'login' => $loginvalid);
+$redirect = (isset($_SESSION['admin_role']) && $_SESSION['admin_role'] === 'ACCOUNTS') ? 'tds-declaration' : 'dashboard.php';
+$response[] = array('status' => $out_stauts, 'msg' => $message, 'login' => $loginvalid, 'redirect' => $redirect);
 echo json_encode($response);
 ?>

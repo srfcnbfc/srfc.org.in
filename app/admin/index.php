@@ -2,7 +2,12 @@
 @ob_start();
 session_start();
 if (isset($_SESSION['adminemail'])) {
-    header("Location:dashboard.php");
+    if (isset($_SESSION['admin_role']) && $_SESSION['admin_role'] === 'ACCOUNTS') {
+        header("Location:tds-declaration");
+    } else {
+        header("Location:dashboard.php");
+    }
+    exit();
 }
 ?>
 <!DOCTYPE html>
@@ -120,7 +125,8 @@ if (isset($_SESSION['adminemail'])) {
                             $("#login-form")[0].reset();
                             swal(data[0].msg, "", data[0].status);
                             if (data[0].login == 1) {
-                                setTimeout(' window.location.href = "dashboard.php"; ', 2000);
+                                var redirectUrl = data[0].redirect || "dashboard.php";
+                                setTimeout(function () { window.location.href = redirectUrl; }, 2000);
                             }
                         }
 

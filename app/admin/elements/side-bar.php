@@ -22,7 +22,9 @@
                             <h6>Navigation</h6>
                         </div>
                     </li>
+                    <?php if (has_access(['SUPER_ADMIN', 'HR', 'CS'])) { ?>
                     <li><a class="nav-link menu-title link-nav" href="dashboard"><i data-feather="home"></i><span>Dashboard</span></a></li>
+                    <?php } ?>
 
                     <!-- HR Role Modules -->
                     <?php if (has_access(['SUPER_ADMIN', 'HR'])) { ?>
@@ -59,8 +61,8 @@
                     <li><a class="nav-link menu-title link-nav" href="tds-declaration"><i data-feather="file-text"></i><span>TDS Form 121</span></a></li>
                     <?php } ?>
 
-                    <!-- Finance & Accounts Role Modules -->
-                    <?php if (has_access(['SUPER_ADMIN', 'ACCOUNTS'])) { ?>
+                    <!-- Finance Query & Enquiry (Super Admin Exclusive) -->
+                    <?php if (has_access(['SUPER_ADMIN'])) { ?>
                     <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i data-feather="dollar-sign"></i><span>Finance Query</span></a>
                         <ul class="nav-submenu menu-content">
                             <li><a href="refinance-loan">Refinance Loan</a></li>

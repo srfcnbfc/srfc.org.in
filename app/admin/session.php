@@ -68,7 +68,11 @@ if (!function_exists('has_access')) {
 if (!function_exists('check_page_access')) {
     function check_page_access($allowed_roles = []) {
         if (!has_access($allowed_roles)) {
-            header("location: dashboard?error=unauthorized");
+            if (get_admin_role() === 'ACCOUNTS') {
+                header("location: tds-declaration?error=unauthorized");
+            } else {
+                header("location: dashboard?error=unauthorized");
+            }
             exit();
         }
     }

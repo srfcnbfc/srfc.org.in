@@ -1,4 +1,7 @@
-<?php include_once 'header.php'; ?>
+<?php 
+require_once __DIR__ . '/header.php'; 
+check_page_access(['SUPER_ADMIN', 'CS', 'ACCOUNTS']);
+?>
 <div class="page-body">
     <div class="container-fluid">
         <div class="page-header">
@@ -6,8 +9,12 @@
                 <div class="col-sm-6 col-md-8">
                     <h3>TDS Declaration – Form 121</h3>
                     <ol class="breadcrumb">
+                        <?php if (get_admin_role() !== 'ACCOUNTS') { ?>
                         <li class="breadcrumb-item"><a href="dashboard">Home</a></li>
                         <li class="breadcrumb-item"><a href="investor">Investor</a></li>
+                        <?php } else { ?>
+                        <li class="breadcrumb-item"><a href="tds-declaration">Home</a></li>
+                        <?php } ?>
                         <li class="breadcrumb-item active">TDS Form 121</li>
                     </ol>
                 </div>
@@ -22,6 +29,12 @@
 
     <!-- Container-fluid starts-->
     <div class="container-fluid list-products">
+        <?php if (isset($_GET['error']) && $_GET['error'] === 'unauthorized') { ?>
+        <div class="alert alert-danger dark alert-dismissible fade show" role="alert">
+            <strong>Access Restricted:</strong> You do not have permission to access that section. You have been redirected to your permitted area.
+            <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <?php } ?>
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">

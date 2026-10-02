@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../../config/config.php';
 require_once __DIR__ . '/../../session.php';
+check_page_access(['SUPER_ADMIN', 'CS', 'ACCOUNTS']);
 
 header('Content-Type: text/csv; charset=utf-8');
 header('Content-Disposition: attachment; filename=TDS_Form_121_Submissions_' . date('Y-m-d_His') . '.csv');

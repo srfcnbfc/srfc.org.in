@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../../config/config.php';
 require_once __DIR__ . '/../../session.php';
+check_page_access(['SUPER_ADMIN', 'CS', 'ACCOUNTS']);
 
 // DB table to use
 $table = 'tds_declaration_121';

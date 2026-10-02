@@ -50,7 +50,7 @@ $admins_result = mysqli_query($conn, $admins_sql);
             <div class="col-md-3 col-sm-6 mb-3">
                 <div class="card bg-warning text-dark p-3 mb-0" style="border-radius: 8px;">
                     <h6 class="mb-1"><i class="fa fa-dollar"></i> Accounts Role</h6>
-                    <small>TDS Form 121 declarations, finance queries & export</small>
+                    <small>TDS Form 121 declarations & CSV export</small>
                 </div>
             </div>
         </div>
@@ -94,7 +94,7 @@ $admins_result = mysqli_query($conn, $admins_sql);
                                             $role_desc = 'Compliance & Investor Documents';
                                         } else if ($role === 'ACCOUNTS') {
                                             $badge_class = 'badge-warning text-dark';
-                                            $role_desc = 'Finance Queries & TDS Form 121';
+                                            $role_desc = 'TDS Form 121 & CSV Export';
                                         }
                                     ?>
                                     <tr>
@@ -173,7 +173,7 @@ $admins_result = mysqli_query($conn, $admins_sql);
                         <select class="form-select" id="add_role" name="admin_role" required>
                             <option value="HR">HR Role (Job Vacancies, Candidate Resumes & Employee Portal)</option>
                             <option value="CS">CS Role (Company Secretary: Investor Docs, Compliance, Disclosures)</option>
-                            <option value="ACCOUNTS">Accounts Role (Finance Queries, TDS Form 121 & CSV Export)</option>
+                            <option value="ACCOUNTS">Accounts Role (TDS Form 121 & CSV Export)</option>
                             <option value="SUPER_ADMIN">Super Admin (Full Unrestricted System Access)</option>
                         </select>
                     </div>
@@ -223,7 +223,7 @@ $admins_result = mysqli_query($conn, $admins_sql);
                         <select class="form-select" id="edit_role" name="admin_role" required>
                             <option value="HR">HR Role (Job Vacancies, Candidate Resumes & Employee Portal)</option>
                             <option value="CS">CS Role (Company Secretary: Investor Docs, Compliance, Disclosures)</option>
-                            <option value="ACCOUNTS">Accounts Role (Finance Queries, TDS Form 121 & CSV Export)</option>
+                            <option value="ACCOUNTS">Accounts Role (TDS Form 121 & CSV Export)</option>
                             <option value="SUPER_ADMIN">Super Admin (Full Unrestricted System Access)</option>
                         </select>
                     </div>
