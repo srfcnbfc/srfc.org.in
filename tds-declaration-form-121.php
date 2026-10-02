@@ -293,7 +293,7 @@
 
                         <div class="tds-support-box">
                             <h6>Need Assistance?</h6>
-                            <p>For any queries regarding Form 121 or TDS deductions, please reach out to our investor grievance team at <a href="mailto:grievance@srfc.org.in" style="color: #15803d; font-weight: 600; text-decoration: underline;">grievance@srfc.org.in</a>.</p>
+                            <p>For any queries regarding Form 121 or TDS deductions, please reach out to our investor grievance team at <a href="mailto:listeddebenture@srfcnbfc.in" style="color: #15803d; font-weight: 600; text-decoration: underline;">listeddebenture@srfcnbfc.in</a>.</p>
                         </div>
                     </div>
                 </div>
